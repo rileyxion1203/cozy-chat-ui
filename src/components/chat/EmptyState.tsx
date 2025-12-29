@@ -7,11 +7,10 @@ export function EmptyState() {
         <span className="text-2xl">🥔</span>
       </div>
       <h1 className="text-xl font-semibold text-foreground mb-2">
-        RedNote Copy Assistant
+        Ask Mr.Potato
       </h1>
       <p className="text-muted-foreground text-[15px] max-w-sm leading-relaxed">
-        Describe your product and I'll craft compliant, 
-        engaging copy for Xiaohongshu.
+        Create compliant, culturally-adapted RedNote ad copy
       </p>
     </div>
   );

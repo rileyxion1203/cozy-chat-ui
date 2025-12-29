@@ -17,14 +17,18 @@ const Index = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [lastFinalCopyIndex, setLastFinalCopyIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const wsInitialized = useRef(false);
 
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Connect WebSocket on mount
+  // Connect WebSocket on mount (with StrictMode guard)
   useEffect(() => {
+    if (wsInitialized.current) return;
+    wsInitialized.current = true;
+
     const wsUrl = `ws://localhost:8000/ws?sessionId=${sessionId}`;
     const websocket = new WebSocket(wsUrl);
 

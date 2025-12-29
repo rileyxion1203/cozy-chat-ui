@@ -17,27 +17,28 @@ const Index = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [lastFinalCopyIndex, setLastFinalCopyIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const wsInitialized = useRef(false);
 
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Connect WebSocket on mount (with StrictMode guard)
+  // Connect WebSocket on mount - use isActive flag to prevent stale closures
   useEffect(() => {
-    if (wsInitialized.current) return;
-    wsInitialized.current = true;
+    let isActive = true;
 
     const wsUrl = `ws://localhost:8000/ws?sessionId=${sessionId}`;
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
+      if (!isActive) return;
       console.log("WebSocket connected");
       setWs(websocket);
     };
 
     websocket.onmessage = (event) => {
+      if (!isActive) return;
+      
       const msg = JSON.parse(event.data) as ServerMessage;
 
       if (msg.type === "assistant_chunk") {
@@ -84,16 +85,19 @@ const Index = () => {
     };
 
     websocket.onerror = (error) => {
+      if (!isActive) return;
       console.error("WebSocket error:", error);
       setStatus(null);
     };
 
     websocket.onclose = () => {
+      if (!isActive) return;
       console.log("WebSocket disconnected");
       setWs(null);
     };
 
     return () => {
+      isActive = false;
       websocket.close();
     };
   }, [sessionId]);

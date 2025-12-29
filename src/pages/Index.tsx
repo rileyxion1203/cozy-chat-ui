@@ -143,7 +143,10 @@ const Index = () => {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-lg">🥔</span>
-            <span className="font-semibold text-foreground">Mr.Potato</span>
+            <div className="flex flex-col">
+              <span className="font-semibold text-foreground leading-tight">Ask Mr.Potato</span>
+              <span className="text-xs text-muted-foreground">Create compliant, culturally-adapted RedNote ad copy</span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <span 

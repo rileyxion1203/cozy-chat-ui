@@ -24,7 +24,7 @@ export function ChatInput({ value, onChange, onSend, disabled }: ChatInputProps)
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Describe your product..."
+          placeholder="Describe your product or paste ad copy ..."
           className="flex-1 bg-background border border-input rounded-xl px-4 py-3 text-[15px] placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-shadow"
           disabled={disabled}
         />
